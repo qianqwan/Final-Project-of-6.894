@@ -7,7 +7,7 @@ var n_tags = 339;
 var h_tagReport =h;
 var stdTxtSize = Math.round(w/200); 
 
-var tagSlct = []; // temp tag dataset! to be replaced by passing down new set 
+var tagSlct = []; 
 var gameGridSizeX;
 var gameGridSizeY;
 
@@ -81,7 +81,6 @@ d3.csv("data/tags_overview.csv")
 
 
     // create a refresh bottom as group of rect and text     
-    // +++++++++++++++++++++++++++++++++++++++++++++++++
     svgGenBtn.append("g")
                 .attr("id","refButton")
                 .append("rect")
@@ -125,25 +124,6 @@ d3.csv("data/tags_overview.csv")
                             .attr("width", w)
                             .attr("height", h_tagReport);
 
- 
-        // start on-click color event 
-        // svgTags.selectAll(".tagsAll")
-        //         .on("click",function(){
-
-        //             // get the current element's tag 
-        //             var thisTag = d3.select(this).attr("id");                                   
-        //             var thisColor = d3.select(this).attr("fill");                                   
-        //             var randomRatio = Math.random()*500; /////////// generate a random ratio as place holder  
-        //             //console.log(this);                                  
-        //             var thisTagItem = tagsOverview.filter(function(d){  // find the data object with the selected id ---> as a dataset with only one object
-        //                 return (d.tag == thisTag);
-        //             });                                   
-        //             var thisTagWeight = thisTagItem[0].tag_weight;    // bracket nomination IS SUPER!!!  // here get whatever i want 
-        //             console.log(thisTagWeight);  
-                                    
-        //             tagSlct.push({tagName: thisTag, tagRatio: randomRatio, tagColor: thisColor, tagWeight: thisTagWeight});
-        //             console.log(tagSlct);
-
 
                     // start generate report with the tagSlct selection
                     svgGenBtn.select("#genButton")
@@ -156,7 +136,7 @@ d3.csv("data/tags_overview.csv")
                                     
                                         var thisTag = selectTags[i].tag;
                                         var thisRatio = selectTags[i].count;
-                                        var thisTagItem = tagsOverview.filter(function(d){  // find the data object with the selected id ---> as a dataset with only one object
+                                        var thisTagItem = tagsOverview.filter(function(d){  
                                                                           return (d.tag == thisTag);
                                                                        });  
                                         var thisTagWeight; 
@@ -165,8 +145,7 @@ d3.csv("data/tags_overview.csv")
                                         }else{
                                             thisTagWeight = thisTagItem[0].tag_weight; 
                                         };                                        
-                                          // bracket nomination IS SUPER!!!  // here get whatever i want 
-                                          //             console.log(thisTagWeight);  
+                          
                                         var thisColor;
                                         svgTags.selectAll("rect").each(function(){
                                         if (d3.select(this).attr("id") === thisTag){
@@ -195,7 +174,7 @@ d3.csv("data/tags_overview.csv")
                                 
 
                                 var tagDisp = tagSlct;  // pass the current seleted tag name to a new dataset                                         
-                                var weightMax = d3.max(tagDisp,function(d){return +d.tagWeight;}); /////note to add ++++++ here!!!!!! the d.tagWeight does not return numeric value Fxxk
+                                var weightMax = d3.max(tagDisp,function(d){return +d.tagWeight;}); 
                                 
                                 // create current tag flower
                                 var pie_0 = d3.pie()
@@ -203,8 +182,6 @@ d3.csv("data/tags_overview.csv")
                                                     return d.tagRatio;
                                                 });
                                 var arc_0 = d3.arc()
-                                            //.innerRadius(0.8*0.5*0.25*h)
-                                            //.outerRadius(0.5*0.25*h);
                                             .innerRadius(function(d,i){
                                                 return 0.6*d.data.tagWeight*0.5*0.25*h/weightMax ;
                                             })
@@ -218,15 +195,13 @@ d3.csv("data/tags_overview.csv")
                                                         .append("g")
                                                         .attr("class","flower")
                                                         .attr("transform", "translate(" + 0.5*w + "," + 0.5*0.3*h + ")");
-                                
-                                //console.log(pie_0(tagDisp));
-                                
+
                                 arcTag_0.append("path")
                                         .attr("id",function(d){
                                             return d.data.tagName;
                                         })
                                         .attr("fill",function(d){
-                                            return d.data.tagColor;  // note: must add .data because each d here is an object, data{} is one of the attributes, pass twice
+                                            return d.data.tagColor;  
                                         })
                                         .attr("d", function(d,i){
                                             return arc_0(d,i);
@@ -309,26 +284,6 @@ d3.csv("data/tags_overview.csv")
                                     yPos.push({year : i, yCounter : 0});
                                 }
                             
-                                // generate report circles
-                                // svgReport.selectAll("circle")
-                                //          .data(gameDisp)
-                                //          .enter()
-                                //          .append("circle")
-                                //          .attr("class","gameDisplay")
-                                //          .attr("cx",function(d,i){
-                                //              return (+d.release_year - firstYear)*gameGridSizeX + 0.5*0.2*w;
-                                //          })
-                                //          .attr("cy",function(d,i){
-                                //             var thisYear = +d.release_year ;
-                                //             var index = yPos.map(item => item.year).indexOf(thisYear);
-                                //             yPos[index].yCounter = yPos[index].yCounter + 1;
-                                //             return (yPos[index].yCounter-1)*gameGridSizeY + 0.5*0.1*h;
-                                //          })
-                                //          .attr("r", function(d){
-                                //              return (gameGridSizeY*d.tag_sum/10000 + 0.2*gameGridSizeY);
-                                //          })
-                                //          .attr("fill","black");
-
 
                                 // generate flower pie for each game displayed 
                                 svgReport.selectAll("g.gameFlower")
@@ -381,24 +336,15 @@ d3.csv("data/tags_overview.csv")
                                                         element.tagColor0 = d3.select(this).attr("fill");
                                                     };
                                                 })
-                                               
-
-
-
-                                        
+                                                                                      
                                             });
-                                            //console.log(flowerEach);
-                                            //get tag color 
-                                            
-                                            
+
                                         
                                             var pie = d3.pie()
                                                         .value(function(d5){
                                                             return d5.tagRatio0;
                                                         });
-                                            //var outR = gameGridSizeY*d.tag_sum/10000 + 0.2*gameGridSizeY;
                                             var outR = 0.25*gameGridSizeY*(1 + Math.pow(d.tag_sum,1/1.8)/10);
-                                            //var outR = 0.5*gameGridSizeY;
                                             var inR = 0.5*outR;
                                             var arc = d3.arc()
                                                         .innerRadius(function(d8,i8){
@@ -407,8 +353,7 @@ d3.csv("data/tags_overview.csv")
                                                         .outerRadius(function(d9,i9){
                                                             return (Math.pow(d9.data.tagWeight0,1/2) * outR/ 25);
                                                         });
-                            
-                                                        
+                                                                               
                                                         
                                             //draw the path 
                                             d3.select(this)
@@ -468,11 +413,6 @@ d3.csv("data/tags_overview.csv")
                                     var thisName = thisGameItem[0].name;
                                     var thisPublisher = thisGameItem[0].publisher;
                                     var posR_negR = thisGameItem[0].positive_ratings + "/" + thisGameItem[0].negative_ratings;
-                                    // var thisGameT1 = thisGameItem[0].t1;
-                                    // var thisGameT2 = thisGameItem[0].t2;
-                                    // var thisGameT3 = thisGameItem[0].t3;
-                                    // var thisGameT4 = thisGameItem[0].t4;
-                                    // var thisGameT5 = thisGameItem[0].t5;
                                     var thisImg = thisGameItem[0].header_image;
                                                        
 
@@ -494,16 +434,6 @@ d3.csv("data/tags_overview.csv")
                                       .text(thisPublisher);
                                     d3.select("#tooltipTxtValue4")
                                       .text(posR_negR);
-                                    // d3.select("#tooltipTxtValue5")
-                                    //   .text(thisGameT1);
-                                    // d3.select("#tooltipTxtValue6")
-                                    //   .text(thisGameT2);
-                                    // d3.select("#tooltipTxtValue7")
-                                    //   .text(thisGameT3);
-                                    // d3.select("#tooltipTxtValue8")
-                                    //   .text(thisGameT4);
-                                    // d3.select("#tooltipTxtValue9")
-                                    //   .text(thisGameT5);
                                     d3.select("#toolTipImg")
                                       .attr("src",thisImg);
                                
@@ -532,7 +462,6 @@ d3.csv("data/tags_overview.csv")
                                                   .style("opacity", 0.25);
                                          d3.select(this)
                                            .style("opacity",1);
-                                           //.attr("fill", "rgba(255,255,200,1)");
 
                                         
                                          svgReport.selectAll("path")
@@ -548,8 +477,6 @@ d3.csv("data/tags_overview.csv")
                                                }
                                            })                                
                                            .style("opacity",1);
-                                           //.attr("fill", "rgba(255,255,200,1)");
-
                                 
                                      })
 
@@ -563,23 +490,11 @@ d3.csv("data/tags_overview.csv")
 
 
                                      })
-
-
-                                
-
-
-
+                            
 
 
                             })
-
-
-
-
-
-
-                
-                    
+                              
 
 
     })
