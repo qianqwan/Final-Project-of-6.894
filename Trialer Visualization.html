@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+
+
+
+
+  <body>
+    <header>
+      <img src= "res/steamVis logo.png" style ="position:absolute; top:calc(0.1vh); left:calc(1vw); width: calc(5vw)">
+      <h1 style = "position:absolute; font-size: calc(1.8vw); color: white; top: calc(1vh); left: calc(7vw)"><b>SteamVis Explorer</b></h1>
+      <div style = "  font-size:calc(1.2vw); color:rgb(255, 255, 255); font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; ">
+          <a href ="Introduction.html" style ="color: inherit"><p style = " position:absolute; top: calc(1vh); right:39%">Introduction</p> </a>
+          <a href ="Steam Explorer.html" style ="color: inherit"><p style = " position:absolute; top: calc(1vh); right:21%">Tag Recommendation</p></a>
+          <a href ="Trialer Visualization.html" style ="color: inherit"><p style = " position:absolute; top: calc(1vh); right:5%">Trialer Visualization</p></a>
+      </div>
+    </header>
+
+    <div id="select" style = "position:absolute; top:8%">Select Popular Trialer</div>
+    <select class="Vids" style = "position:absolute; top:13%">
+      <option value="f1">2020 Portal</option>
+      <option value="f2">2019 Sekiro</option>
+      <option value="f3">2018 Warframe</option>
+      <option value="f4">2017 H1Z1</option>
+      <option value="f5">2016 CS</option>
+    </select>
+    <div class="vis" style = "position:absolute; top:30%">
+    </div>
+ 
+  </body>
+
+
+  <script src="//d3js.org/d3.v4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style_1.css">
+  <script src="js/trialerVis.js"></script>
+
+
+</html>
